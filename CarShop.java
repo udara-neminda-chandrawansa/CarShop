@@ -6,7 +6,9 @@ public class CarShop{
 
     public static ArrayList<Car> carList = new ArrayList<Car>(); // ArrayList objact to store all cars
 
-    public static void main(String[] args) {
+    public static void initiateDialog(){
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+
         // create seperator lines
         SepLine mainSep = new SepLine("=", 50);
         SepLine subSep = new SepLine("-", 50);
@@ -14,6 +16,65 @@ public class CarShop{
         mainSep.drawLine();
         System.out.println("> Hello! This is UNC Car Shop!");
         subSep.drawLine();
+
+        System.out.print("> What u wanna do fool?\n (1: Create Car | 2: Start Drag Race | 3: Upgrade Cars | 4: Exit) ");
+        int taskNo = myObj.nextInt();  // Read task no
+        switch(taskNo){
+            case 1:
+                // create car (Name, Manu, Acc, TS, Handl, Enl, Trl, Brl)
+                System.out.print("> Name of your car: ");
+                myObj.nextLine();  // Consume leftover newline
+                String carName = myObj.nextLine();  // Read car name
+                
+                System.out.print("> Car Manufacturer: ");
+                String carManufacturer = myObj.nextLine();  // Read car manufacturer
+                
+                System.out.print("> Acceleration: ");
+                float carAcceleration = myObj.nextFloat();  // Read car acceleration
+                
+                System.out.print("> Top Speed: ");
+                int carTopSpeed = myObj.nextInt();  // Read car top speed
+                
+                System.out.print("> Handling: ");
+                float carHandling = myObj.nextFloat();  // Read car handling
+                
+                // create car
+                Car c1 = new Car(carName, carManufacturer, carAcceleration, carTopSpeed, carHandling, 0, 0, 0);
+                c1.displayInfo();
+                carList.add(c1);
+
+                initiateDialog();
+                break;
+            case 2:
+                // drag race
+                if(carList.size() == 2){
+                    initiateDragRace(carList.get(0), carList.get(1));
+                }else{
+                    System.out.println("> Invalid number of participants!");
+                }
+                initiateDialog();
+                break;
+            case 3:
+                // upgrade
+                System.out.println("> lets upgrade!");
+                break;
+            case 4:
+                // exit
+                System.out.println("> GoodBye!");
+                break;
+            default:
+                System.out.println("> Invalid input!");
+                initiateDialog();
+                break;
+        }
+    }
+
+    public static void main(String[] args) {
+        // create seperator lines
+        SepLine mainSep = new SepLine("=", 50);
+        SepLine subSep = new SepLine("-", 50);
+
+        initiateDialog();
 
         // create a stock car & display info
         Car civic = new Car("Civic", "Honda", 0.3f, 110, 0.3f, 0, 0, 0);
